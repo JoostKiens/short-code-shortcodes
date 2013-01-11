@@ -99,7 +99,6 @@ class shortcodeshortcodes {
 	 * @param  array  $shortcodes Excluded shortcodes
 	 * @return array              Excluded shortcodes, with added exclusions
 	 */
-	
 	function no_texturized_shortcodes_filter( $shortcodes ) {
 		$shortcodes[] = 'code';
 		$shortcodes[] = 'precode';

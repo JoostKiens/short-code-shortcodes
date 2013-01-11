@@ -13,10 +13,10 @@ This WordPress plugin adds two shortcodes for rendering code:
 
 These shortcodes solve 2 problems:
 
-* Auto inserting of Curly or smart quotes. These shortcodes explicitly don't use wptexturize.
+* Ocassional auto transformation to smart quotes. WP _should_ not convert quotes to smart quotes between [code]<pre>[/code] & [code]<code>[/code], but sometimes it happens anyway. These shortcodes explicitly don't use wptexturize.
 * The need to manually convert html tags, etc to htmlentities. The shortcodes convert the content to htmlentities (no quotes, utf-8)
 
-# Usage
+### Usage
 `[code]<p>This is the "code" shortcode, for in-line code. Use it in the same way as you'd use <code>.[/code]`
 
     [precode]
@@ -26,12 +26,19 @@ These shortcodes solve 2 problems:
     <p>
     [/precode]
 
-# Shortcode attributes
+### Shortcode attributes
 There are no functional attributes. 
 
 [Core HTML attributes](http://www.w3.org/wiki/HTML/Attributes/_Global#Core_Attributes) are allowed and get rendered in the resulting html. Example:
 `[code class="code-html" lang="fr-FR"]<h1>Le monde est a nous</h1>[/code]`
 
-# Installation
+### Installation
 1. Upload short-code-shortcode folder to `wp-content/plugins/`
 1. Activate plugin through the 'Plugins' menu in WordPress
+
+## Change log
+#### 0.1.1
+Added trim function to the clean_code_content method
+
+#### 0.1.0
+Initial commit

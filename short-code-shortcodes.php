@@ -5,7 +5,7 @@ Plugin URI: http://joostkiens.com
 Description: Adds 2 simple shortcodes for rendering blocklevel [precode] and inline code [code]. converts code to html entites and disables WP's autoformatting. <a href="http://joostkiens.com/">Usage</a>.
 The code itself gets converted to utf-8 html entities (not necessary to type &lt;, etc.)
 Quotes won't get converted by the WordPress texturizer, so users can copy your code directly.
-Version: 0.1
+Version: 0.1.1
 Author: Joost Kiens
 Author Email: me@joostkiens.com
 License:
@@ -66,14 +66,11 @@ class shortcodeshortcodes {
 	 */
 	function init_short_code_shortcodes() {
 
-		// Allow translations
 		load_plugin_textdomain( self::slug, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
-		// Register the shortcode [code]
 		add_shortcode( 'code', array( &$this, 'render_code_shortcode' ) );
 		add_shortcode( 'precode', array( &$this, 'render_precode_shortcode' ) );
 
-		// Excludes shortcodes from running wptexturize
 		add_filter( 'no_texturize_shortcodes', array( &$this, 'no_texturized_shortcodes_filter' ) );
 	}
 
@@ -102,6 +99,7 @@ class shortcodeshortcodes {
 	 * @param  array  $shortcodes Excluded shortcodes
 	 * @return array              Excluded shortcodes, with added exclusions
 	 */
+	
 	function no_texturized_shortcodes_filter( $shortcodes ) {
 		$shortcodes[] = 'code';
 		$shortcodes[] = 'precode';
@@ -114,7 +112,7 @@ class shortcodeshortcodes {
 	 * @return str             Text content of the shortcode, converted to HTML entities
 	 */
 	private function clean_code_content ( $content ) {
-		return htmlentities( $content, ENT_NOQUOTES, "UTF-8", false );
+		return htmlentities( trim( $content ), ENT_NOQUOTES, 'UTF-8', false );
 	}
 
 	/**

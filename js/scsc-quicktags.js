@@ -1,0 +1,2 @@
+edButtons[edButtons.length] = new edButton( 'scsc_code', '[code]', '[code]', '[/code]', '', 'Wrap inline code' );
+edButtons[edButtons.length] = new edButton( 'scsc_precode', '[precode]', '[precode]', '[/precode]', '', 'Wrap multi-line code' );

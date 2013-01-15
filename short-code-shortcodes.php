@@ -5,7 +5,7 @@ Plugin URI: http://joostkiens.com
 Description: Adds 2 simple shortcodes for rendering blocklevel [precode] and inline code [code]. converts code to html entites and disables WP's autoformatting. <a href="http://joostkiens.com/">Usage</a>.
 The code itself gets converted to utf-8 html entities (not necessary to type &lt;, etc.)
 Quotes won't get converted by the WordPress texturizer, so users can copy your code directly.
-Version: 0.1.1
+Version: 0.2.1
 Author: Joost Kiens
 Author Email: me@joostkiens.com
 License:
@@ -32,9 +32,9 @@ class shortcodeshortcodes {
 	/*--------------------------------------------*
 	 * Constants
 	 *--------------------------------------------*/
-	const name = 'short code shortcodes';
-	const slug = 'short_code_shortcodes';
-
+	const name          = 'short code shortcodes';
+	const slug          = 'short_code_shortcodes';
+	
 	/**
 	 * Constructor
 	 */
@@ -58,6 +58,8 @@ class shortcodeshortcodes {
 			'tabindex',
 			'title',
 		);
+		$this->scsc_path     = plugin_dir_path( __FILE__ );
+		$this->scsc_url      = plugin_dir_url( __FILE__ );
 	}
 
 	/**
@@ -65,13 +67,11 @@ class shortcodeshortcodes {
 	 * @return void
 	 */
 	function init_short_code_shortcodes() {
-
 		load_plugin_textdomain( self::slug, false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
-
 		add_shortcode( 'code', array( &$this, 'render_code_shortcode' ) );
 		add_shortcode( 'precode', array( &$this, 'render_precode_shortcode' ) );
-
 		add_filter( 'no_texturize_shortcodes', array( &$this, 'no_texturized_shortcodes_filter' ) );
+		$this->add_buttons();
 	}
 
 	/**
@@ -106,6 +106,52 @@ class shortcodeshortcodes {
 	}
 
 	/**
+	 * Add buttons to tinymce Editor & quick tags
+	 */
+	function add_buttons() {
+		if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') ) {
+			return;
+		}
+
+		// Add to TinyMCS
+		add_filter( 'mce_external_plugins', array( &$this, 'add_plugin' ) );
+		add_filter( 'mce_buttons', array( &$this, 'register_buttons' ) );
+		
+		// Add to quick tags
+		add_action('admin_print_scripts', array( &$this, 'custom_quicktags' ) );
+	}
+
+	/**
+	 * Register code & precode quick tags
+	 * @return void
+	 */
+	function custom_quicktags() {
+		wp_enqueue_script( 'scsc_quicktags', $this->scsc_url . 'js/scsc-quicktags.js', array('quicktags') );
+	}
+
+	/**
+	 * Register buttons to tinymce editor
+	 * @param  arr    $buttons Array of tinymce buttons
+	 * @return arr             Modified array of tinymce buttons
+	 */
+	function register_buttons( $buttons ) {
+		array_push( $buttons, 'scsc_code', 'scsc_precode' );
+		var_dump($buttons);
+		return $buttons;
+	}
+
+	/**
+	 * Add plugin to tinymce
+	 * @param  arr   $plugin_array Array of plugins for tinymce
+	 * @return arr                 Modified array of plugins for tinymce
+	 */
+	function add_plugin( $plugin_array ) {
+		$plugin_array['scsc_code'] = $this->scsc_url . 'js/scsc-code.js';
+		$plugin_array['scsc_precode'] = $this->scsc_url . 'js/scsc-precode.js';
+		return $plugin_array;
+	}
+
+	/**
 	 * Convert to HTML entities
 	 * @param  str    $content Text content of the shortcode
 	 * @return str             Text content of the shortcode, converted to HTML entities
@@ -134,6 +180,5 @@ class shortcodeshortcodes {
 
 		return $html_attributes;
 	}
-
 } // end class
 new shortcodeshortcodes();

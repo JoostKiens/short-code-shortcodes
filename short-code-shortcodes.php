@@ -5,7 +5,7 @@ Plugin URI: http://joostkiens.com
 Description: Adds 2 simple shortcodes for rendering blocklevel [precode] and inline code [code]. converts code to html entites and disables WP's autoformatting. <a href="http://joostkiens.com/">Usage</a>.
 The code itself gets converted to utf-8 html entities (not necessary to type &lt;, etc.)
 Quotes won't get converted by the WordPress texturizer, so users can copy your code directly.
-Version: 0.2.1
+Version: 0.2.2
 Author: Joost Kiens
 Author Email: me@joostkiens.com
 License:

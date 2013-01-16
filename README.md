@@ -13,11 +13,11 @@ This WordPress plugin adds two shortcodes for rendering code:
 
 These shortcodes solve 2 problems:
 
-* Ocassional auto transformation to smart quotes. WP _should_ not convert quotes to smart quotes between [code]<pre>[/code] & [code]<code>[/code], but sometimes it happens anyway. These shortcodes explicitly don't use wptexturize.
+* Ocassional auto transformation to smart quotes. WP _should_ not convert quotes to smart quotes between `<pre>` & `<code>`, but sometimes it happens anyway. These shortcodes explicitly disallow the use of wptexturize.
 * The need to manually convert html tags, etc to htmlentities. The shortcodes convert the content to htmlentities (no quotes, utf-8)
 
 ### Usage
-`[code]<p>This is the "code" shortcode, for in-line code. Use it in the same way as you'd use <code>.[/code]`
+`[code]<p>This is the "code" shortcode, for in-line code. Use it in the same way as you'd use <code>.</p>[/code]`
 
     [precode]
     <p>
@@ -37,6 +37,9 @@ There are no functional attributes.
 1. Activate plugin through the 'Plugins' menu in WordPress
 
 ## Change log
+#### 0.2.1
+* Fixed formatting error is README.md
+
 #### 0.2.1
 * Added [code] and [precode] buttons to TinyMCE's kitchensink & Quick tags
 

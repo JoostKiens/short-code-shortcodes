@@ -115,7 +115,7 @@ class shortcodeshortcodes {
 
 		// Add to TinyMCS
 		add_filter( 'mce_external_plugins', array( &$this, 'add_plugin' ) );
-		add_filter( 'mce_buttons', array( &$this, 'register_buttons' ) );
+		add_filter( 'mce_buttons_2', array( &$this, 'register_buttons' ) );
 		
 		// Add to quick tags
 		add_action('admin_print_scripts', array( &$this, 'custom_quicktags' ) );
@@ -136,7 +136,6 @@ class shortcodeshortcodes {
 	 */
 	function register_buttons( $buttons ) {
 		array_push( $buttons, 'scsc_code', 'scsc_precode' );
-		var_dump($buttons);
 		return $buttons;
 	}
 

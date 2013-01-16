@@ -37,8 +37,11 @@ There are no functional attributes.
 1. Activate plugin through the 'Plugins' menu in WordPress
 
 ## Change log
+#### 0.2.1
+* Added [code] and [precode] buttons to TinyMCE's kitchensink & Quick tags
+
 #### 0.1.1
-Added trim function to the clean_code_content method
+* Added trim function to the clean_code_content method
 
 #### 0.1.0
-Initial commit
+* Initial commit
